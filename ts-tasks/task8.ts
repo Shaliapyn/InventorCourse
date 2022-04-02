@@ -12,7 +12,8 @@ interface Admin {
     role: string;
 }
 
-type PowerUser = Omit<User & Admin, "type"> & { type: "powerUser" };
+type PowerUser = Omit<User & Admin, "type"> & {type: "powerUser"} // тут ще потрібно Pick, але не знаю як їх поєднати
+// Pick<User | Admin, "role" & "occupation">
 
 export type Person = User | Admin | PowerUser;
 
@@ -21,13 +22,7 @@ export const persons: Person[] = [
     { type: 'admin', name: 'Jane Doe', age: 32, role: 'Administrator' },
     { type: 'user', name: 'Kate Müller', age: 23, occupation: 'Astronaut' },
     { type: 'admin', name: 'Bruce Willis', age: 64, role: 'World saver' },
-    {
-        type: 'powerUser',
-        name: 'Nikki Stone',
-        age: 45,
-        role: 'Moderator',
-        occupation: 'Cat groomer'
-    }
+    {type: 'powerUser', name: 'Nikki Stone', age: 45, role: 'Moderator', occupation: 'Cat groomer'}
 ];
 
 function isAdmin(person: Person): person is Admin {
