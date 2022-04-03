@@ -52,10 +52,12 @@ const users: User[] = [
     }
 ];
 
-export function swap (v1: any, v2: any) {
-    return [v2, v1];
-}
-
+// export function swap (v1: any, v2: any) {
+//     return [v2, v1];
+// } OR 
+ export function swap <T, Y>(v1: T, v2: Y): [Y, T] {
+     return [v2, v1];
+     } 
 function test1() {
     console.log('test1:');
     const [secondUser, firstAdmin] = swap(admins[0], users[1]);
