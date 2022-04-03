@@ -35,12 +35,17 @@ export type ApiResponse<T> = (
     }
 );
 
-export function promisify<T>(arg: ApiResponse<T>): Promise<T> {
-    return new Promise((resolve, reject) =>{
-        if (arg.status === "success") resolve(arg.data)
-        else reject(arg.error)
-    });
-}
+export function promisify<T>(arg: (callback: (response: ApiResponse<T>) => void) => void): ()=> Promise<T> {
+
+    return () => new Promise((resolve, reject) => {
+        arg((response) => {
+          if (response.status === "success") {
+              resolve(response.data);
+          }
+          else reject(response.error);
+        });
+      });
+  }
 
 const oldApi = {
     requestAdmins(callback: (response: ApiResponse<Admin[]>) => void) {
